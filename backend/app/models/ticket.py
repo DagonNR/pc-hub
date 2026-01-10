@@ -1,0 +1,17 @@
+from app.core.database import Base
+from sqlalchemy import Column, Integer, String, DateTime, Numeric
+from datetime import datetime
+
+class Ticket(Base):
+    __tablename__ = "tickets"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(), nullable=False)
+    description = Column(String(), nullable=True)
+    status = Column(String(), default="new", nullable=False, index=True)
+    priority = Column(String(), default="medium", nullable=False, index=True)
+    service_type = Column(String(), default="repair", nullable=False, index=True)
+    estimated_cost = Column(Numeric(precision=10, scale=2), nullable=True)
+    final_cost = Column(Numeric(precision=10, scale=2), nullable=True)
+    created_at = Column(DateTime(), default=datetime.utcnow, nullable=False, index=True)
+    updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
