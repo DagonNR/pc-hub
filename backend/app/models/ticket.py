@@ -14,4 +14,4 @@ class Ticket(Base):
     estimated_cost = Column(Numeric(precision=10, scale=2), nullable=True)
     final_cost = Column(Numeric(precision=10, scale=2), nullable=True)
     created_at = Column(DateTime(), default=datetime.utcnow, nullable=False, index=True)
-    updated_at = Column(DateTime())
+    updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
