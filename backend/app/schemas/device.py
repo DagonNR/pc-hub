@@ -10,6 +10,7 @@ class DeviceDeviceType(str, Enum):
     other = "other"
 
 class DeviceCreateAndUpdate(BaseModel):
+    #client_id: Optional[int]
     device_type: DeviceDeviceType = DeviceDeviceType.other
     brand: str
     model: str
@@ -24,6 +25,7 @@ class DeviceCreateAndUpdate(BaseModel):
 
 class DeviceOut(BaseModel):
     id: int
+    #client_id: Optional[int]
     device_type: DeviceDeviceType = DeviceDeviceType.other
     brand: str
     model: str

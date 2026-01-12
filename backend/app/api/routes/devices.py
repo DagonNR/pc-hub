@@ -22,6 +22,7 @@ def get_device(device_id: int, db: Session = Depends(get_database)):
 @router.post("/", response_model=DeviceOut, status_code=status.HTTP_201_CREATED)
 def create_device(payload: DeviceCreateAndUpdate, db: Session = Depends(get_database)):
     device = Device(
+        #client_id = payload.client_id,
         device_type = payload.device_type.value,
         brand = payload.brand,
         model = payload.model,
