@@ -18,4 +18,4 @@ class Inventory(Base):
     created_at = Column(DateTime(), default=datetime.utcnow, nullable=False, index=True)
     updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=True)
     
-    #inventory_ticket = relationship("Inventory", back_populates="inventory_ticket")
+    inventory_movements = relationship("InventoryMovement", back_populates="inventories")

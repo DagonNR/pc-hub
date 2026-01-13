@@ -25,7 +25,7 @@ class TicketServiceType(str, Enum):
     upgrade = "upgrade"
 
 class TicketCreate(BaseModel):
-    device_id: Optional[int]
+    device_id: Optional[int] = None
     title: str
     description: Optional[str] = None
     priority: TicketPriority = TicketPriority.medium
@@ -33,7 +33,7 @@ class TicketCreate(BaseModel):
     estimated_cost: Optional[Decimal] = None
 
 class TicketUpdate(BaseModel):
-    device_id: Optional[int]
+    device_id: Optional[int] = None
     title: Optional[str] = None
     description: Optional[str] = None
     status: Optional[TicketStatus] = None
@@ -45,7 +45,7 @@ class TicketUpdate(BaseModel):
 
 class TicketOut(BaseModel):
     id: int
-    device_id: Optional[int]
+    device_id: Optional[int] = None
     title: str
     description: Optional[str] = None
     status: TicketStatus

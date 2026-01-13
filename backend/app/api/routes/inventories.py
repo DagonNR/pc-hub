@@ -21,6 +21,9 @@ def get_inventory(inventory_id: int, db: Session = Depends(get_database)):
 
 @router.post("/", response_model=InventoryOut, status_code=status.HTTP_201_CREATED)
 def create_inventory(payload: InventoryCreate, db: Session = Depends(get_database)):
+    if payload.stock <= 0 or payload.unit_cost <= 0 or payload.unit_price <= 0:
+        raise HTTPException(400, "Número invalido")
+    
     inventory = Inventory(
         name = payload.name,
         category = payload.category.value,
@@ -31,6 +34,7 @@ def create_inventory(payload: InventoryCreate, db: Session = Depends(get_databas
         unit_cost = payload.unit_cost,
         unit_price = payload.unit_price
     )
+    
     db.add(inventory)
     db.commit()
     db.refresh(inventory)
