@@ -1,0 +1,21 @@
+from app.core.database import Base
+from sqlalchemy import Column,Integer,String,DateTime,Numeric
+from datetime import datetime 
+
+class Client(Base):
+    __tablename__= "clients"
+
+    id = Column(Integer, primary_key=True, index=True)
+    first_name = Column(String(), nullable=False, index=True)
+    last_name = Column(String(), nullable=False, index=True)
+    rfc = Column(String(13), nullable=False, index=True)
+    email = Column(String(), nullable=False, index=True)
+    phone_number = Column(String(10), nullable=False, index=True)
+    street_adress = Column(String(), nullable=False)
+    interior_number = Column(String(6), nullable=False)
+    outer_number = Column(String(6), nullable=True)
+    postal_code = Column(String(5), nullable=False)
+    city = Column(String(), nullable=False)
+    state = Column(String(), nullable=False)
+    created_at = Column(DateTime(), default=datetime.utcnow, nullable=False, index=True)
+    update_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
