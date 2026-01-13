@@ -7,7 +7,6 @@ class Device(Base):
     __tablename__ = "devices"
 
     id = Column(Integer, primary_key=True, index=True)
-    #client_id = Column(Integer(), ForeignKey("clients.id"), index=True, nullable=True)
     device_type = Column(String(), default="other", nullable=False, index=True)
     brand = Column(String(), nullable=False, index=True)
     model = Column(String(), nullable=False)
@@ -16,4 +15,3 @@ class Device(Base):
     updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=True)
 
     tickets = relationship("Ticket", back_populates="device")
-    #client = relationship("Client", back_populates="device")

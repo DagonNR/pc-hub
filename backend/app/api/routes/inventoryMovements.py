@@ -5,6 +5,7 @@ from app.core.deps import get_database
 from app.models.inventoryMovement import InventoryMovement
 from typing import List
 from app.models.inventory import Inventory
+from app.models.ticket import Ticket
 
 router = APIRouter(prefix="/inventoryMovements", tags=["inventoryMovements"])
 
@@ -29,6 +30,10 @@ def create_inventory_movement(payload: InventoryMovementCreate, db: Session = De
     inventory = db.query(Inventory).filter(Inventory.id == payload.inventory_id).first()
     if not inventory:
         raise HTTPException(status_code=404, detail="Producto de inventario no encotrado")
+    
+    ticket = db.query(Ticket).filter(Ticket.id == payload.ticket_id).first()
+    if not ticket:
+        raise HTTPException(status_code=404, detail="Ticket no encontrado")
 
     m_type = payload.movement_type.value
 

@@ -1,6 +1,4 @@
 from datetime import datetime
-from decimal import Decimal
-from enum import Enum
 from typing import Optional
 from pydantic import BaseModel
 
@@ -9,10 +7,10 @@ class ClientCreate(BaseModel):
     last_name: str
     rfc: str
     email: str
-    phone_number: str
+    phone_number: Optional[str] = None
     street_adress: str
-    interior_number: str
-    outer_number: Optional[str] = None
+    interior_number: Optional[str] = None
+    outer_number: str
     postal_code: str
     city: str
     state: str
@@ -38,8 +36,8 @@ class ClientOut(BaseModel):
     email: str
     phone_number: str
     street_adress: str
-    interior_number: str
-    outer_number: Optional[str] = None
+    interior_number: Optional[str] = None
+    outer_number: str
     postal_code: str
     city: str
     state: str

@@ -3,6 +3,8 @@ from app.schemas.ticket import TicketOut, TicketCreate, TicketUpdate
 from sqlalchemy.orm import Session
 from app.core.deps import get_database
 from app.models.ticket import Ticket
+from app.models.client import Client
+from app.models.device import Device
 from typing import List
 
 router = APIRouter(prefix="/tickets", tags=["tickets"])
@@ -24,8 +26,18 @@ def create_ticket(payload: TicketCreate, db: Session = Depends(get_database)):
     if payload.estimated_cost <= 0:
         raise HTTPException(400, "Número invalido")
     
+    client = db.query(Client).filter(Client.id == payload.client_id).first()
+    if not client:
+        raise HTTPException(404, "Cliente no encontrado")
+
+    if payload.device_id is not None:
+        device = db.query(Device).filter(Device.id == payload.device_id).first()
+        if not device:
+            raise HTTPException(404, "Dispositivo no encontrado")
+
     ticket = Ticket(
         device_id = payload.device_id,
+        client_id = payload.client_id,
         title = payload.title,
         description = payload.description,
         status = "new",

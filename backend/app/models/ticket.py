@@ -8,6 +8,7 @@ class Ticket(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     device_id = Column(Integer(), ForeignKey("devices.id"), index=True, nullable=True)
+    client_id = Column(Integer(), ForeignKey("clients.id"), index=True, nullable=False)
     title = Column(String(), nullable=False)
     description = Column(String(), nullable=True)
     status = Column(String(), default="new", nullable=False, index=True)
@@ -20,3 +21,4 @@ class Ticket(Base):
 
     device = relationship("Device", back_populates="tickets")
     inventory_movements = relationship("InventoryMovement", back_populates="tickets")
+    client = relationship("Client", back_populates="tickets")
