@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from app.schemas.device import DeviceOut, DeviceCreateAndUpdate
+from app.schemas.device import DeviceOut, DeviceCreate, DeviceUpdate
 from sqlalchemy.orm import Session
 from app.core.deps import get_database
 from app.models.device import Device
@@ -20,7 +20,7 @@ def get_device(device_id: int, db: Session = Depends(get_database)):
     return device
 
 @router.post("/", response_model=DeviceOut, status_code=status.HTTP_201_CREATED)
-def create_device(payload: DeviceCreateAndUpdate, db: Session = Depends(get_database)):
+def create_device(payload: DeviceCreate, db: Session = Depends(get_database)):
     device = Device(
         #client_id = payload.client_id,
         device_type = payload.device_type.value,
@@ -34,7 +34,7 @@ def create_device(payload: DeviceCreateAndUpdate, db: Session = Depends(get_data
     return device
 
 @router.patch("/{devices_id}", response_model=DeviceOut)
-def update_device(payload: DeviceCreateAndUpdate, device_id: int, db: Session = Depends(get_database)):
+def update_device(payload: DeviceUpdate, device_id: int, db: Session = Depends(get_database)):
     device = db.query(Device).filter(Device.id == device_id).first()
     if not device:
         raise HTTPException(status_code= 404, detail= "Dispositivo no encontrado")

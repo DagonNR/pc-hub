@@ -18,4 +18,5 @@ class Ticket(Base):
     created_at = Column(DateTime(), default=datetime.utcnow, nullable=False, index=True)
     updated_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=True)
 
-    device = relationship("Device", back_populates="ticket")
+    device = relationship("Device", back_populates="tickets")
+    inventory_movements = relationship("InventoryMovement", back_populates="tickets")
