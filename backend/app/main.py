@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.api.routes.tickets import router as tickets_router
 from app.api.routes.devices import router as devices_router
+from app.api.routes.inventories import router as inventory_router
 from app.core.database import Base, engine #Esto es momentaneo, en un futuro se usara Asemblic
 import app.models
 
@@ -12,6 +13,7 @@ def health():
 
 app.include_router(tickets_router)
 app.include_router(devices_router)
+app.include_router(inventory_router)
 
 @app.on_event("startup")
 def on_startup():
