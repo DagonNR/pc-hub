@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.api.routes.tickets import router as tickets_router
+from app.api.routes.clients import router as clients_router
 from app.api.routes.devices import router as devices_router
 from app.api.routes.inventories import router as inventory_router
 from app.api.routes.inventoryMovements import router as inventory_movements_route
@@ -12,6 +13,7 @@ app = FastAPI(title="PC Hub")
 def health():
     return {"message": "All is ok"}
 
+app.include_router(clients_router)
 app.include_router(tickets_router)
 app.include_router(devices_router)
 app.include_router(inventory_router)
