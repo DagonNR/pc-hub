@@ -9,21 +9,22 @@ class DeviceDeviceType(str, Enum):
     all_in_one = "all_in_one"
     other = "other"
 
-class DeviceCreateAndUpdate(BaseModel):
+class DeviceCreate(BaseModel):
+    #client_id: Optional[int]
     device_type: DeviceDeviceType = DeviceDeviceType.other
     brand: str
     model: str
     notes: Optional[str] = None
 
-# Como para crear y modificar tenemos los mismos valores, no necesitamos actualmente las dos class
-"""class DeviceUpdate(BaseModel):
-    device_type: DeviceDeviceType = DeviceDeviceType.other
-    brand: str
-    model: str
-    notes: Optional[str] = None"""
+class DeviceUpdate(BaseModel):
+    device_type: Optional[DeviceDeviceType] = None
+    brand: Optional[str] = None
+    model: Optional[str] = None
+    notes: Optional[str] = None
 
 class DeviceOut(BaseModel):
     id: int
+    #client_id: Optional[int]
     device_type: DeviceDeviceType = DeviceDeviceType.other
     brand: str
     model: str
