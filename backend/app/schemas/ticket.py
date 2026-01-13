@@ -26,6 +26,7 @@ class TicketServiceType(str, Enum):
 
 class TicketCreate(BaseModel):
     device_id: Optional[int] = None
+    client_id: Optional[int] = None
     title: str
     description: Optional[str] = None
     priority: TicketPriority = TicketPriority.medium
@@ -34,6 +35,7 @@ class TicketCreate(BaseModel):
 
 class TicketUpdate(BaseModel):
     device_id: Optional[int] = None
+    client_id: Optional[int] = None
     title: Optional[str] = None
     description: Optional[str] = None
     status: Optional[TicketStatus] = None
@@ -46,6 +48,7 @@ class TicketUpdate(BaseModel):
 class TicketOut(BaseModel):
     id: int
     device_id: Optional[int] = None
+    client_id: Optional[int] = None
     title: str
     description: Optional[str] = None
     status: TicketStatus

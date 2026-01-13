@@ -26,6 +26,7 @@ def create_ticket(payload: TicketCreate, db: Session = Depends(get_database)):
     
     ticket = Ticket(
         device_id = payload.device_id,
+        client_id = payload.client_id,
         title = payload.title,
         description = payload.description,
         status = "new",
