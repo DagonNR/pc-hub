@@ -21,7 +21,11 @@ def get_ticket(ticket_id: int, db: Session = Depends(get_database)):
 
 @router.post("/", response_model=TicketOut, status_code=status.HTTP_201_CREATED)
 def create_ticket(payload: TicketCreate, db: Session = Depends(get_database)):
+    if payload.estimated_cost <= 0:
+        raise HTTPException(400, "Número invalido")
+    
     ticket = Ticket(
+        device_id = payload.device_id,
         title = payload.title,
         description = payload.description,
         status = "new",
@@ -30,6 +34,7 @@ def create_ticket(payload: TicketCreate, db: Session = Depends(get_database)):
         estimated_cost = payload.estimated_cost,
         final_cost = None
     )
+    
     db.add(ticket)
     db.commit()
     db.refresh(ticket)
@@ -61,7 +66,7 @@ def update_ticket(payload: TicketUpdate, ticket_id: int, db: Session = Depends(g
 def delete_ticket(ticket_id: int, db: Session = Depends(get_database)):
     ticket = db.query(Ticket).filter(Ticket.id == ticket_id).first()
     if not ticket:
-        raise HTTPException(status_code=404, detail="Ticket not found")
+        raise HTTPException(status_code=404, detail="Ticket no encontrado")
 
     db.delete(ticket)
     db.commit()
