@@ -38,7 +38,7 @@ class InventoryMovementOut(BaseModel):
     inventory_id: Optional[int] = None
     ticket_id: Optional[int] = None
     movement_type: InventoryMovementMovementType = InventoryMovementMovementType.inside
-    adjustment_direction: InventoryMovementMovementType = InventoryMovementMovementType.inside
+    adjustment_direction: InventoryMovementAdjustmentDirection = InventoryMovementAdjustmentDirection.increase
     quantity: int
     reason: InventoryMovementReason = InventoryMovementReason.purchase
     description: Optional[str] = None
