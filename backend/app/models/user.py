@@ -1,12 +1,8 @@
 from app.core.database import Base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Enum as SqlEnum
+from sqlalchemy.orm import relationship
 from datetime import datetime
-from enum import Enum
-
-class UserRole(str, Enum):
-    admin = "admin"
-    tech = "tech"
-    client = "client"
+from app.schemas.user import UserRole
 
 class User(Base):
     __tablename__ = "users"
@@ -17,4 +13,5 @@ class User(Base):
     role = Column(SqlEnum(UserRole), default=UserRole.client, nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    client = relationship("Client", back_populates="user", uselist=False, single_parent=True)

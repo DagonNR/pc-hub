@@ -1,26 +1,27 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from app.schemas.inventory import InventoryOut, InventoryCreate, InventoryUpdate
+from app.schemas.user import UserRole
 from sqlalchemy.orm import Session
-from app.core.deps import get_database
+from app.core.deps import get_database, require_roles
 from app.models.inventory import Inventory
 from typing import List
 
-router = APIRouter(prefix="/inventories", tags=["inventory"])
+router = APIRouter(prefix="/inventories", tags=["inventory"], dependencies=[Depends(require_roles(UserRole.admin, UserRole.tech))])
 
 @router.get("/", response_model=List[InventoryOut])
-def list_inventory(db: Session = Depends(get_database)):
+def list_inventory(db: Session = Depends(get_database), current_user = Depends(require_roles(UserRole.admin))):
     inventories = db.query(Inventory).order_by(Inventory.created_at.desc()).all()
     return inventories
 
 @router.get("/{inventory_id}", response_model=InventoryOut)
-def get_inventory(inventory_id: int, db: Session = Depends(get_database)):
+def get_inventory(inventory_id: int, db: Session = Depends(get_database), current_user = Depends(require_roles(UserRole.admin, UserRole.tech))):
     inventory = db.query(Inventory).filter(Inventory.id == inventory_id).first()
     if not inventory:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
     return inventory
 
 @router.post("/", response_model=InventoryOut, status_code=status.HTTP_201_CREATED)
-def create_inventory(payload: InventoryCreate, db: Session = Depends(get_database)):
+def create_inventory(payload: InventoryCreate, db: Session = Depends(get_database), current_user = Depends(require_roles(UserRole.admin, UserRole.tech))):
     if payload.stock <= 0 or payload.unit_cost <= 0 or payload.unit_price <= 0:
         raise HTTPException(400, "Número invalido")
     
@@ -41,7 +42,7 @@ def create_inventory(payload: InventoryCreate, db: Session = Depends(get_databas
     return inventory
 
 @router.patch("/{inventory_id}", response_model=InventoryOut)
-def update_inventory(payload: InventoryUpdate, inventory_id: int, db: Session = Depends(get_database)):
+def update_inventory(payload: InventoryUpdate, inventory_id: int, db: Session = Depends(get_database), current_user = Depends(require_roles(UserRole.admin))):
     inventory = db.query(Inventory).filter(Inventory.id == inventory_id).first()
     if not inventory:
         raise HTTPException(status_code=404, detail="Producto no encontrado")
@@ -59,7 +60,7 @@ def update_inventory(payload: InventoryUpdate, inventory_id: int, db: Session = 
     return inventory
 
 @router.delete("/{inventory_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_inventory(inventory_id: int, db: Session = Depends(get_database)):
+def delete_inventory(inventory_id: int, db: Session = Depends(get_database), current_user = Depends(require_roles(UserRole.admin))):
     inventory = db.query(Inventory).filter(Inventory.id == inventory_id).first()
     if not inventory:
         raise HTTPException(status_code=404, detail="Producto no encontrado")

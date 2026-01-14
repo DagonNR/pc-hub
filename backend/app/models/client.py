@@ -1,5 +1,5 @@
 from app.core.database import Base
-from sqlalchemy import Column,Integer,String,DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime 
 
@@ -7,6 +7,7 @@ class Client(Base):
     __tablename__= "clients"
 
     id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer(), ForeignKey("users.id"), index=True, nullable=False, unique=True)
     first_name = Column(String(), nullable=False, index=True)
     last_name = Column(String(), nullable=False, index=True)
     rfc = Column(String(13), nullable=False, index=True)
@@ -22,3 +23,4 @@ class Client(Base):
     update_at = Column(DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     tickets = relationship("Ticket", back_populates="client")
+    user = relationship("User", back_populates="client")

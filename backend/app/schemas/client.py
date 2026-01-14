@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 class ClientCreate(BaseModel):
+    user_id: int
     first_name: str
     last_name: str
     rfc: str
@@ -16,6 +17,7 @@ class ClientCreate(BaseModel):
     state: str
 
 class ClientUpdate(BaseModel):
+    user_id: Optional[int] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     rfc: Optional[str] = None
@@ -30,6 +32,7 @@ class ClientUpdate(BaseModel):
 
 class ClientOut(BaseModel):
     id: int
+    user_id: int
     first_name: str
     last_name: str
     rfc: str

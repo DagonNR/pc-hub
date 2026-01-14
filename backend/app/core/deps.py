@@ -13,13 +13,13 @@ def get_database() -> Generator:
     finally:
         db.close()
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auths/login")
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_database)):
     payload = decode_access_token(token)
     if not payload:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token inválido")
-    user = db.query(User).filter(User.id == payload.get("sub")).first()
+    user = db.query(User).filter(User.id == int(payload.get("sub"))).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuario no encontrado")
     return user
