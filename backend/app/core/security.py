@@ -1,12 +1,11 @@
-import base64
-import json
-import hmac
-import hashlib
+import hashlib, os, base64, json, hmac
 from datetime import datetime, timedelta
 
 SECRET_KEY = "supersecretkey"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+#SECRET_KEY = os.getenv("SECRET_KEY", "dev-insecure-change-me")
 
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
