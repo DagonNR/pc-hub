@@ -19,3 +19,5 @@ typing_extensions==4.15.0
 uvicorn==0.40.0
 alembic==1.18.0
 python-multipart==0.0.21
+passlib==1.7.4
+bcrypt==4.1.3

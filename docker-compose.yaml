@@ -17,6 +17,8 @@ services:
     container_name: pc_hub_api
     environment:
       DATABASE_URL: postgresql+psycopg2://pcuser:pcpass@db:5432/pchub
+      SECRET_KEY: ${SECRET_KEY}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
     ports:
       - "8000:8000"
     depends_on:
