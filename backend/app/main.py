@@ -4,6 +4,7 @@ from app.api.routes.clients import router as clients_router
 from app.api.routes.devices import router as devices_router
 from app.api.routes.inventories import router as inventory_router
 from app.api.routes.inventoryMovements import router as inventory_movements_route
+from app.api.routes.auth import router as auth_router
 from app.core.database import Base, engine #Esto es momentaneo, en un futuro se usara Asemblic
 import app.models
 
@@ -18,6 +19,8 @@ app.include_router(tickets_router)
 app.include_router(devices_router)
 app.include_router(inventory_router)
 app.include_router(inventory_movements_route)
+app.include_router(auth_router)
+
 
 @app.on_event("startup")
 def on_startup():
