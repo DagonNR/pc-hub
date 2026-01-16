@@ -24,4 +24,4 @@ URL: [pc-hub-api](https://pchub-api-dagon-a7hac2c5esffc9cx.centralus-01.azureweb
 
 ## Uso
 Si quieres probar el funcionamiento, es importante ir a /docs (en los links dados anteriormente ya esta dirigo a /docs) y debería aparecer lo siguiente en pantalla:
-[pc-hub-image1](docs/images/pc-hub1.png)
+![pc-hub-image1](docs/images/pc-hub1.png)
